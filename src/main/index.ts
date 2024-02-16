@@ -2,9 +2,6 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-// import ElementPlus from 'element-plus'
-// import 'element-plus/dist/index.css'
-
 
 function createWindow(): void {
   // Create the browser window.
@@ -22,6 +19,10 @@ function createWindow(): void {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+  })
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('main to render', 'completed')
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -54,6 +55,7 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.handle('ping-ping', () => 'pong-pong')
 
   createWindow()
 
@@ -62,6 +64,16 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  // let iCounter = 0
+  // setInterval(() => {
+  //   iCounter++
+  //   console.log(`hello[${iCounter}]`)
+  //   if(win && win.webContents){
+  //     console.log('webContents.send')
+  //     win.webContents.send('main-to-render',iCounter);
+  //   }
+  // }, 1000, '2000ms')
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
