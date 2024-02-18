@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { reactive, onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 
-const props = defineProps({
-  // eslint-disable-next-line vue/require-prop-types, vue/prop-name-casing
-  msg: {
-    String,
-    default: 'hi'
-  }
-})
+// const props = defineProps({
+//   msg: {
+//     String,
+//     default: 'compx'
+//   }
+// })
+
+const msg = 'compx'
 
 onMounted(() => {
   console.log('compX onMounted')

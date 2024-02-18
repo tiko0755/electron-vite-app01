@@ -1,0 +1,11 @@
+{
+  "name": "def",
+  "version": "1.0.0",
+  "description": "股票的二进制信息解码",
+  "main": "def.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tiko",
+  "license": "ISC"
+}

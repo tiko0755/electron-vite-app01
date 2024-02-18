@@ -8,26 +8,27 @@ const api = {
   },
   goodbye: () => {
     console.log('preload.api.goodbyd')
-  }
-}
-
-// Custom APIs for test
-const usrAPI = {
+  },
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
-  pingping: () => electronAPI.ipcRenderer.invoke('ping-ping')
+  pingping: () => electronAPI.ipcRenderer.invoke('ping-ping'),
+  req: (channel, cb) => {
+    electronAPI.ipcRenderer.invoke(channel).then((result) => {
+      cb(result)
+    })
+  }
   // 除函数之外，我们也可以暴露变量
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
+console.log('process.contextIsolated:', process.contextIsolated)
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
-    contextBridge.exposeInMainWorld('versions', usrAPI)
   } catch (error) {
     console.error(error)
   }
